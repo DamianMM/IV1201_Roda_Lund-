@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>RÖDA LUND</title>
+    </h:head>
+    <h:body>
+        <ui:insert name = "header" >
+            <ui:include src = "/fragments/header.xhtml" />
+        </ui:insert>         
+        <h1>Register</h1>
+        <h:form>
+            <p>
+                <h:outputLabel for="User" value="first Name"/>
+            </p>
+            <p>
+                <h:inputText id="firstName" value="#{registerManager.firstName}"/>
+                <h:message for="firstName"/>
+            </p>
+            
+            
+            <p>
+                <h:outputLabel for="User" value="Last Name"/>
+            </p>
+            
+            <p>
+                <h:inputText id="lastName" value="#{registerManager.lastName}"/>
+                <h:message for="lastName"/>
+            </p>
+            
+            
+            <p>
+                <h:outputLabel for="User" value="Date of birth: yyyy-mm-dd"/>
+            </p>
+            
+            <p>
+                <h:inputText id="dateOfBirth" value="#{registerManager.dateOfBirth}" label="date of birth">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for="dateOfBirth"/>
+            </p>
+            
+            <p>
+                <h:outputLabel for="User" value="Email"/>
+            </p>
+            <p>
+                <h:inputText id="email" value="#{registerManager.email}" />
+
+                <h:message for="email"/>
+            </p>
+            
+            
+            <p>
+                <h:outputLabel for="User" value="Password"/>
+            </p>
+            <p>
+                <h:inputSecret id="password" value = "#{registerManager.password}" />
+                <h:message for="password"/>
+            </p>       
+            
+            
+            
+            <p>
+                <h:commandButton value="Register" action="#{registerManager.register}"/>
+            </p>
+        </h:form>
+        <ui:insert name = "footer" >
+            <ui:include src = "/fragments/footer.xhtml" />
+        </ui:insert>
+    </h:body>
+</html>
