@@ -13,7 +13,6 @@ import se.kth.id1212.mynewjavaeeapp.model.Competence;
 import se.kth.id1212.mynewjavaeeapp.model.User;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 import se.kth.id1212.mynewjavaeeapp.model.UserInfoDTO;
-//HEJ
 
 
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
