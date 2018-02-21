@@ -3,13 +3,11 @@ package se.kth.id1212.mynewjavaeeapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -20,7 +18,6 @@ import javax.validation.constraints.Size;
         @NamedQuery(
             name = "findUserByEmail",
             query = "SELECT usr FROM Person usr WHERE usr.email LIKE :searchedEmail"
-            //lockMode = LockModeType.OPTIMISTIC
     )
 })
 
@@ -64,19 +61,6 @@ public class User implements UserDTO, Serializable {
     public User() {
     }
 
-    /*
-    public User(String firstName, String lastName, Date dateOfBirth, String email, String password) {
-        first_name = firstName;
-        last_name = lastName;
-        //Calendar tempDate = Calendar.getInstance();
-        //tempDate.set(1999, 1, 1);
-        System.out.println(dateOfBirth);
-        date_of_birth = dateOfBirth;//tempDate.getTime();
-        this.email = email;
-        this.password = password;
-        actor_id = 1;
-    }
-    */
     public User(UserInfoDTO userInfo){
         first_name = userInfo.getFirst_name();
         last_name = userInfo.getLast_name();
@@ -89,11 +73,10 @@ public class User implements UserDTO, Serializable {
 
 
 
-
-   /* @Override
+    /*
+    @Override
     public int hashCode() {
-        int hash = 0;
-        return new Integer(person_id).hashCode();
+        return Objects.hash(email);
     }
 
     @Override
@@ -102,13 +85,9 @@ public class User implements UserDTO, Serializable {
             return false;
         }
         User other = (User) object;
-        return this.person_id == other.person_id;
+        return this.email.equals(other.email);
     }
-
-    @Override
-    public int getPerson_id() {
-        return person_id;
-    } */
+    */
 
     @Override
     public String getFirst_name() {

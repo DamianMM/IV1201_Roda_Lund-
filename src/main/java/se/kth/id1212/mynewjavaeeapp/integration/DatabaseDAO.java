@@ -26,10 +26,7 @@ public class DatabaseDAO {
 
     
     public UserDTO findUser(String email) throws NoResultException {
-        UserDTO user = em.createNamedQuery("findUserByEmail", User.class).
-                setParameter("searchedEmail", email).
-                getSingleResult();
-        return user;
+       return em.find(User.class, email);
     }
 
     public List<Competence> findAllCompetences() {
