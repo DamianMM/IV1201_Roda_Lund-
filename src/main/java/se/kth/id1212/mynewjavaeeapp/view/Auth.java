@@ -2,6 +2,7 @@
 package se.kth.id1212.mynewjavaeeapp.view;
 
 
+import java.io.Serializable;
 import java.security.Principal;
 import javax.ejb.EJB;
 
@@ -13,7 +14,7 @@ import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 
 @ManagedBean
 @SessionScoped
-public class Auth {
+public class Auth implements Serializable{
 
     private UserDTO user;
 

@@ -57,7 +57,9 @@ public class ProfileManager implements Serializable{
     }
     
     public void addCompetence(){
-        System.out.println("HEHEHHEHEHE" + chosenCompetence);
+        Auth auth = new Auth();
+        String userEmail = auth.getUser().getEmail();
+        controller.addCompetence(experience, chosenCompetence, userEmail);
     }
 
     /**

@@ -10,6 +10,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 import se.kth.id1212.mynewjavaeeapp.integration.DatabaseDAO;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
+import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 import se.kth.id1212.mynewjavaeeapp.model.UserInfoDTO;
@@ -21,6 +22,7 @@ public class Controller {
     
     @EJB
     DatabaseDAO dB;
+    
 
     public void registerUser(UserInfoDTO userInfo) throws EntityExistsException {
        dB.registerUser(new User(userInfo));
@@ -34,5 +36,9 @@ public class Controller {
 
     public List<Competence> getCompetences() {
         return dB.findAllCompetences();
+    }
+
+    public void addCompetence(int experience, String competence, String userEmail) {
+        dB.addCompetence(new CompetenceProfile(experience, competence, userEmail));
     }
 }

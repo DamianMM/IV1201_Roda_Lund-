@@ -24,15 +24,12 @@ import javax.persistence.NamedQuery;
         @NamedQuery(
             name = "findAllCompetences",
             query = "SELECT cmpt FROM Competence cmpt"
-            //lockMode = LockModeType.OPTIMISTIC
     )
 })
 
 @Entity(name="Competence")
 public class Competence implements CompetenceDTO, Serializable{
     @Id
-    /*@GeneratedValue(strategy = GenerationType.AUTO)
-    private int competence_id; */
     private String competence_name;
     
     public Competence(){}
@@ -41,6 +38,4 @@ public class Competence implements CompetenceDTO, Serializable{
     public String toString() {
         return competence_name;
     }
-    
-    
 }

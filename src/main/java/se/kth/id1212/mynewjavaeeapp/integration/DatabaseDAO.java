@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
+import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 
@@ -32,5 +33,9 @@ public class DatabaseDAO {
     public List<Competence> findAllCompetences() {
         return em.createNamedQuery("findAllCompetences", Competence.class).
                 getResultList();
+    }
+
+    public void addCompetence(CompetenceProfile competenceProfile) {
+        em.persist(competenceProfile);
     }
 }
