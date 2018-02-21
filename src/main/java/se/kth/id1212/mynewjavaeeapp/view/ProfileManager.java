@@ -6,13 +6,16 @@
 package se.kth.id1212.mynewjavaeeapp.view;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import se.kth.id1212.mynewjavaeeapp.controller.Controller;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceDTO;
+import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 
 /**
  *
@@ -26,6 +29,7 @@ public class ProfileManager implements Serializable{
     private ArrayList<CompetenceDTO> competences;
     private String chosenCompetence;
     private int experience;
+    private UserDTO user;
 
 
     /**
@@ -57,9 +61,7 @@ public class ProfileManager implements Serializable{
     }
     
     public void addCompetence(){
-        Auth auth = new Auth();
-        String userEmail = auth.getUser().getEmail();
-        controller.addCompetence(experience, chosenCompetence, userEmail);
+        controller.addCompetence(experience, chosenCompetence, user.getEmail());
     }
 
     /**
@@ -74,6 +76,17 @@ public class ProfileManager implements Serializable{
      */
     public void setExperience(int experience) {
         this.experience = experience;
+    }
+    
+    
+        public UserDTO getUser() {
+        if (user == null) {
+            Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+            if (principal != null) {
+                user = controller.findUser(principal.getName());
+            }
+        }
+        return user;
     }
    
 }

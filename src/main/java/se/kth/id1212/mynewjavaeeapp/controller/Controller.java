@@ -22,7 +22,6 @@ public class Controller {
     
     @EJB
     DatabaseDAO dB;
-    
 
     public void registerUser(UserInfoDTO userInfo) throws EntityExistsException {
        dB.registerUser(new User(userInfo));
