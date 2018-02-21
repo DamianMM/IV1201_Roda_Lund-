@@ -8,6 +8,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import se.kth.id1212.mynewjavaeeapp.model.Application;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
@@ -37,5 +38,9 @@ public class DatabaseDAO {
 
     public void addCompetence(CompetenceProfile competenceProfile) {
         em.persist(competenceProfile);
+    }
+
+    public void addApplication(Application application) {
+        em.persist(application);
     }
 }

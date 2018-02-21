@@ -16,7 +16,7 @@ import javax.persistence.SequenceGenerator;
  *
  * @author mikaelnorberg
  */
-@Entity(name="CompetenceProfile")
+@Entity(name="Competence_Profile")
 public class CompetenceProfile implements Serializable{
     
     @Id

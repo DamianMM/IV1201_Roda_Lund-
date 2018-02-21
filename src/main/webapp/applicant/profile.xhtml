@@ -10,8 +10,11 @@
     <h:body>
         <h1>Profile</h1>
         <p>
-        <h:outputText value="#{profileManager.user}"/>
+            <h:outputText value="#{profileManager.user}"/>
         </p>
+        <h:form>
+            <h:commandButton value="logout" action="#{profileManager.logout}" />
+        </h:form>
         <h:form>
             <h3>Add competence</h3>
             <p>
@@ -32,5 +35,37 @@
                 <h:commandButton value="submit" action="#{profileManager.addCompetence}"/>
             </p>
         </h:form>
+        
+        
+        <h:form>
+            <h3>Add availability</h3>
+            <p>
+                <h:outputLabel for="User" value="From: yyyy-mm-dd"/>
+            </p>
+            
+            <p>
+                <h:inputText id="availableFrom" value="#{profileManager.availableFrom}" label="Available from">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for="Available from"/>
+            </p>
+
+            
+            <p>
+                <h:outputLabel for="User" value="From: yyyy-mm-dd"/>
+            </p>
+            
+            <p>
+                <h:inputText id="availableTo" value="#{profileManager.availableTo}" label="Available to">
+                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                </h:inputText>
+                <h:message for="Available to"/>
+            </p>
+            
+           
+            <p>
+                <h:commandButton value="submit" action="#{profileManager.addApplication}"/>
+            </p>
+        </h:form>        
     </h:body>
 </html>

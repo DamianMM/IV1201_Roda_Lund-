@@ -1,6 +1,7 @@
 
 package se.kth.id1212.mynewjavaeeapp.controller;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -9,6 +10,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 import se.kth.id1212.mynewjavaeeapp.integration.DatabaseDAO;
+import se.kth.id1212.mynewjavaeeapp.model.Application;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
@@ -39,5 +41,9 @@ public class Controller {
 
     public void addCompetence(int experience, String competence, String userEmail) {
         dB.addCompetence(new CompetenceProfile(experience, competence, userEmail));
+    }
+
+    public void addApplication(UserDTO user, Date availableFrom, Date availableTo) {
+        dB.addApplication(new Application(user.getEmail(), availableFrom, availableTo));
     }
 }
