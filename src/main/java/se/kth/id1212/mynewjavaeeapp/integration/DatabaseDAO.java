@@ -1,5 +1,5 @@
 package se.kth.id1212.mynewjavaeeapp.integration;
-//DB
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
