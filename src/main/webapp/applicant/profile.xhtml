@@ -3,11 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Röda Lund</title>
     </h:head>
     <h:body>
+        <ui:insert name = "header" >
+            <ui:include src = "/fragments/header.xhtml" />
+        </ui:insert> 
         <h1>Profile</h1>
         <hr/>
         <p>
@@ -65,6 +69,9 @@
                 <h:commandButton value="submit" action="#{profileManager.addApplication}"/>
             </p>
         </h:form>
-        <hr/>        
+        <hr/>   
+        <ui:insert name = "footer" >
+            <ui:include src = "/fragments/footer.xhtml" />
+        </ui:insert>        
     </h:body>
 </html>

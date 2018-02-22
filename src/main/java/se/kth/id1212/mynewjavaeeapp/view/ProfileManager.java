@@ -38,6 +38,7 @@ public class ProfileManager implements Serializable{
     
     private ArrayList<CompetenceDTO> competences;
     
+    @NotNull(message="Choose one of the available competences.")
     private String chosenCompetence;
     
     @NotNull(message = "Experience field is required!")
