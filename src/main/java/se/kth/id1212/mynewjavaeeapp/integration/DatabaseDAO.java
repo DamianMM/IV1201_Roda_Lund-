@@ -14,32 +14,60 @@ import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 
-
+/**
+ * Handles all interaction with the entity manager. No code outside of this class, except for the
+ * JPA entities, shall have anything to do with JPA.
+ * 
+ * @author mikaelnorberg
+ */
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 @Stateless
 public class DatabaseDAO {
     @PersistenceContext(unitName = "persistenceUnit")
     private EntityManager em;
 
-    
+    /**
+     * Registers a new user
+     * @param person The user who wants to register
+     * @throws EntityExistsException Thrown if user already exist in db
+     */
     public void registerUser(User person) throws EntityExistsException{
         em.persist(person);
     }
 
-    
+    /**
+     * finds existing user by email
+     * @param email user identifier
+     * @return Found user
+     * @throws NoResultException if user is not registered
+     */
     public UserDTO findUser(String email) throws NoResultException {
        return em.find(User.class, email);
     }
 
-    public List<Competence> findAllCompetences() {
-        return em.createNamedQuery("findAllCompetences", Competence.class).
+    /**
+     * Lists all competences not already added to the users competence profile
+     * @param email user identifier
+     * @return List of competences
+     */
+    public List<Competence> findAllCompetences(String email) {
+        return em.createNamedQuery("findAllCompetencesNotAllreadyPartOfCompetenceProfile", Competence.class).
+                setParameter("userEmail", email).
                 getResultList();
     }
 
+    /**
+     * Add a competence profile for current user
+     * @param competenceProfile the users competence profile
+     */
     public void addCompetence(CompetenceProfile competenceProfile) {
         em.persist(competenceProfile);
     }
 
+    /**
+     * Add a application for current user
+     * @param application users application
+     */
     public void addApplication(Application application) {
         em.persist(application);
     }

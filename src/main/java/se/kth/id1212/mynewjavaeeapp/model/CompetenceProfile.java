@@ -7,31 +7,36 @@ package se.kth.id1212.mynewjavaeeapp.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
 /**
- *
+ * A persistence representation of a users competence profile
+ * 
  * @author mikaelnorberg
  */
 @Entity(name="Competence_Profile")
 public class CompetenceProfile implements Serializable{
-    
-    @Id
-    @SequenceGenerator(name="COMPETENCE_PROFILE_SEQUENCE_GENERATOR", sequenceName="COMPETENCE_PROFILE_PRIMARY_KEY_SEQUENCE",initialValue=1, allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="COMPETENCE_PROFILE_SEQUENCE_GENERATOR")    
-    private int competence_profile_id;
-    
+
     private int years_of_experience;
     
+    @Id
     private String competence;
     
+    @Id
     private String person;
     
+    /**
+     * Creates a new instance of a competence profile
+     */
     public CompetenceProfile(){}
     
+    /**
+     * Creates a new instance of a competence profile
+     * 
+     * @param years_of_experience A users experience in number of years for the chosen competence
+     * @param competence Users competence
+     * @param email User identifier
+     */
     public CompetenceProfile(int years_of_experience, String competence, String email){
         this.years_of_experience = years_of_experience;
         this.competence = competence;

@@ -26,10 +26,7 @@
                 <h:outputLabel for="experience" value="Years of experience: "/>
             </p>
             <p>
-                <h:inputText id="experience" value="#{profileManager.experience}" converterMessage="Please enter digits only.">
-                    <f:convertNumber integerOnly="true" type="number" />
-                    <f:validateLongRange minimum="1" maximum="99" />
-                </h:inputText>
+                <h:inputText id="experience" value="#{profileManager.experience}" converterMessage="Only digits are allowed."/>
             </p>            
             <p>
                 <h:commandButton value="submit" action="#{profileManager.addCompetence}"/>
@@ -59,7 +56,7 @@
                 <h:inputText id="availableTo" value="#{profileManager.availableTo}" label="Available to">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                 </h:inputText>
-                <h:message for="Available to"/>
+                <h:message for="availableTo"/>
             </p>
             
            

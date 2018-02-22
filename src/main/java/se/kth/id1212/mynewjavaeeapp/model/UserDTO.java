@@ -3,6 +3,10 @@ package se.kth.id1212.mynewjavaeeapp.model;
 
 import java.util.Date;
 
+/**
+ *
+ * @author mikaelnorberg
+ */
 public interface UserDTO {
     
     /**
@@ -30,6 +34,10 @@ public interface UserDTO {
      */
     public String getEmail();
     
+    /**
+     *
+     * @return
+     */
     public String toString();
     
 }

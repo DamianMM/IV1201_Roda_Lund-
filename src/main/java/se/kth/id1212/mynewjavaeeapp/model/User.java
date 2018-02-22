@@ -3,7 +3,6 @@ package se.kth.id1212.mynewjavaeeapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -14,6 +13,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ * Persistence representation of a user
+ * 
+ * @author mikaelnorberg
+ */
 @NamedQueries({
         @NamedQuery(
             name = "findUserByEmail",
@@ -24,14 +28,8 @@ import javax.validation.constraints.Size;
 @Entity(name="Person")
 public class User implements UserDTO, Serializable {
     
-    
-    //@Id
-    //@SequenceGenerator(name="PERSON_SEQUENCE_GENERATOR", sequenceName="PERSON_PRIMARY_KEY_SEQUENCE",initialValue=1, allocationSize=1)
-    //@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PERSON_SEQUENCE_GENERATOR")
-    //private int person_id;
-    
     @Id
-    @Pattern(regexp = "[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+")
+    @Pattern(regexp = "[a-z0-9]+@[a-z0-9]+\\.[a-z0-9]+")
     private String email;
     
     @Size(min=1, max=100)
@@ -54,13 +52,17 @@ public class User implements UserDTO, Serializable {
     
     private String actor;
 
-
-
-    
-    
+    /**
+     * creates a new instance of a user object
+     */
     public User() {
     }
 
+    /**
+     * creates a new instance of a user object
+     * 
+     * @param userInfo information about the current user
+     */
     public User(UserInfoDTO userInfo){
         first_name = userInfo.getFirst_name();
         last_name = userInfo.getLast_name();
@@ -69,25 +71,6 @@ public class User implements UserDTO, Serializable {
         password = userInfo.getPassword();
         actor = "applicant";
     }
-
-
-
-
-    /*
-    @Override
-    public int hashCode() {
-        return Objects.hash(email);
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        return this.email.equals(other.email);
-    }
-    */
 
     @Override
     public String getFirst_name() {

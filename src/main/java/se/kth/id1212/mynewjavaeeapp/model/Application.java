@@ -17,7 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * A persistence representation of an Application
+ * 
  * @author mikaelnorberg
  */
 @Entity(name="Application")
@@ -41,8 +42,19 @@ public class Application implements Serializable {
     @Temporal(TemporalType.DATE)
     Date to_date;
     
+    /**
+     * Creates a new instance of Application
+     */
     public Application(){}
     
+    /**
+     * 
+     * Creates a new instance of Application
+     *
+     * @param userEmail User identifier
+     * @param availableFrom User is available for work from this date
+     * @param availableTo User is available for work to this date
+     */
     public Application(String userEmail, Date availableFrom, Date availableTo){
         register_date = Calendar.getInstance().getTime();
         person = userEmail;

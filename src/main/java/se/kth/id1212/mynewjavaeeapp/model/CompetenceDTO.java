@@ -6,9 +6,14 @@
 package se.kth.id1212.mynewjavaeeapp.model;
 
 /**
- *
+ * 
  * @author mikaelnorberg
  */
 public interface CompetenceDTO {
+
+    /**
+     *
+     * @return
+     */
     public String toString();
 }

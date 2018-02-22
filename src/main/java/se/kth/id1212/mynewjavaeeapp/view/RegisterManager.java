@@ -104,6 +104,9 @@ public class RegisterManager implements Serializable{
         this.password = password;
     }
     
+    /**
+     *
+     */
     public void register() {
         
         user = new UserInfoDTO(firstName, lastName, dateOfBirth, email, password);
@@ -129,6 +132,10 @@ public class RegisterManager implements Serializable{
         this.dateOfBirth = dateOfBirth;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean getSuccess(){
         return registerFailure == null;
     }

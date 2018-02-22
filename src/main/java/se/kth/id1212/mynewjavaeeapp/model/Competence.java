@@ -7,14 +7,13 @@ package se.kth.id1212.mynewjavaeeapp.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
- *
+ * A persistence representation of a competence
+ * 
  * @author mikaelnorberg
  */
 
@@ -22,8 +21,8 @@ import javax.persistence.NamedQuery;
 
 @NamedQueries({
         @NamedQuery(
-            name = "findAllCompetences",
-            query = "SELECT cmpt FROM Competence cmpt"
+            name = "findAllCompetencesNotAllreadyPartOfCompetenceProfile",
+            query = "SELECT cmpt FROM Competence cmpt WHERE cmpt.competence_name NOT IN (SELECT cmpt_profile.competence FROM Competence_Profile cmpt_profile WHERE cmpt_profile.person LIKE :userEmail)"
     )
 })
 
@@ -32,6 +31,9 @@ public class Competence implements CompetenceDTO, Serializable{
     @Id
     private String competence_name;
     
+    /**
+     * Creates a new instance of Account. 
+     */
     public Competence(){}
 
     @Override

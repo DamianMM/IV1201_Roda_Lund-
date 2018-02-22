@@ -12,15 +12,21 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import se.kth.id1212.mynewjavaeeapp.controller.Controller;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceDTO;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 
 /**
- *
+ * The logged in users actions from the view are handled by this class
+ * 
  * @author mikaelnorberg
  */
 @Named("profileManager")
@@ -29,12 +35,25 @@ import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 public class ProfileManager implements Serializable{
     @EJB
     private Controller controller;
+    
     private ArrayList<CompetenceDTO> competences;
+    
     private String chosenCompetence;
+    
+    @NotNull(message = "Experience field is required!")
+    @Min(value=1, message = "You must have at least one year of experience.")
+    @Max(value=70, message = "You must have at most 70 years of experience.")
     private int experience;
+    
     private UserDTO user;
+    
+    @NotNull(message = "From date is required!")
     private Date availableFrom;
+    
+    @NotNull(message = "To date is required!")
     private Date availableTo;
+    
+    private UIComponent availableto;
 
 
     /**
@@ -52,10 +71,10 @@ public class ProfileManager implements Serializable{
     }
 
     /**
-     * @return the competences
+     * @return List of all competences not already added to the users competence profile
      */
     public List<? extends CompetenceDTO> getCompetences() {
-        return controller.getCompetences();
+        return controller.getCompetences(user.getEmail());
     }
 
     /**
@@ -65,17 +84,31 @@ public class ProfileManager implements Serializable{
         this.competences = competences;
     }
     
+    /**
+     *  Called when the user press the submit button to add competence
+     */
     public void addCompetence(){
         controller.addCompetence(experience, chosenCompetence, user.getEmail());
     }
     
+    /**
+     * Called when the user press the submit button to add application for a job
+     */
     public void addApplication(){
-        controller.addApplication(user, getAvailableFrom(), getAvailableTo());
+        if(availableTo.after(availableFrom)){
+            controller.addApplication(user, availableFrom, availableTo);            
+        } else {
+            FacesMessage message = new FacesMessage("to date must be after from date.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("availableTo", message);
+            availableFrom = null;
+            availableTo = null;
+        }
     }
     
 
     /**
-     * @return the experience
+     * @return the experience 
      */
     public int getExperience() {
         return experience;
@@ -88,8 +121,11 @@ public class ProfileManager implements Serializable{
         this.experience = experience;
     }
     
-    
-        public UserDTO getUser() {
+    /**
+     *
+     * @return The logged in user for the current session
+     */
+    public UserDTO getUser() {
         if (user == null) {
             Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
             if (principal != null) {
@@ -99,6 +135,10 @@ public class ProfileManager implements Serializable{
         return user;
     }
         
+    /**
+     *
+     * @return Redirect to index.xhtml
+     */
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/index.xhtml?faces-redirect=true";
@@ -108,7 +148,7 @@ public class ProfileManager implements Serializable{
      * @return the availableFrom
      */
     public Date getAvailableFrom() {
-        return availableFrom;
+        return null;
     }
 
     /**
@@ -122,7 +162,7 @@ public class ProfileManager implements Serializable{
      * @return the availableTo
      */
     public Date getAvailableTo() {
-        return availableTo;
+        return null;
     }
 
     /**
@@ -131,5 +171,6 @@ public class ProfileManager implements Serializable{
     public void setAvailableTo(Date availableTo) {
         this.availableTo = availableTo;
     }
+
    
 }

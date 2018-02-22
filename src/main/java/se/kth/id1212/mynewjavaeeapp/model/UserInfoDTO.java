@@ -3,6 +3,10 @@ package se.kth.id1212.mynewjavaeeapp.model;
 
 import java.util.Date;
 
+/**
+ *
+ * @author mikaelnorberg
+ */
 public class UserInfoDTO {
     private int person_id;
     private String first_name;
@@ -11,6 +15,14 @@ public class UserInfoDTO {
     private String email;
     private String password;
     
+    /**
+     *
+     * @param first_name
+     * @param last_name
+     * @param date_of_birth
+     * @param email
+     * @param password
+     */
     public UserInfoDTO(
     String first_name,
     String last_name,
