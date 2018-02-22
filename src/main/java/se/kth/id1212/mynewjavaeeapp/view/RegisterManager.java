@@ -18,7 +18,8 @@ import se.kth.id1212.mynewjavaeeapp.controller.Controller;
 import se.kth.id1212.mynewjavaeeapp.model.UserInfoDTO;
 
 /**
- *
+ * Handles a user registration process
+ * 
  * @author mikaelnorberg
  */
 @Named("registerManager")
@@ -105,7 +106,7 @@ public class RegisterManager implements Serializable{
     }
     
     /**
-     *
+     * Registers user. Called when the user press the submit registration button.
      */
     public void register() {
         
