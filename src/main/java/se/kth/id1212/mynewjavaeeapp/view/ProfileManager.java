@@ -102,7 +102,7 @@ public class ProfileManager implements Serializable{
             FacesMessage message = new FacesMessage("to date must be after from date.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("availableTo", message);
-            //availableFrom = null;
+            availableFrom = null;
             availableTo = null;
         }
     }

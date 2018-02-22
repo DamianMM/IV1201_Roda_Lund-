@@ -72,26 +72,51 @@ public class User implements UserDTO, Serializable {
         actor = "applicant";
     }
 
+    
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getFirst_name() {
         return first_name;
     }
 
+    
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getLast_name() {
         return last_name;
     }
 
+    
+    /**
+     * 
+     * @return 
+     */
     @Override
     public Date getDate_of_birth() {
         return date_of_birth;
     }
 
+    
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getEmail() {
         return email;
     }
     
+    
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String toString(){
         return this.email;

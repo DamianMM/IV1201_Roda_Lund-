@@ -27,6 +27,11 @@ import se.kth.id1212.mynewjavaeeapp.model.UserInfoDTO;
 public class RegisterManager implements Serializable{
     @EJB
     private Controller controller;
+    
+    @Size(max=100,
+             message = "First name must be less than 100 characters.")
+    @Pattern(regexp = "^[\\p{L}\\s'.-]+$", 
+             message = "Please enter a valid first name.")    
     private String firstName;
     
    @Size(max=100,

@@ -26,6 +26,7 @@ import javax.persistence.NamedQuery;
     )
 })
 
+
 @Entity(name="Competence")
 public class Competence implements CompetenceDTO, Serializable{
     @Id

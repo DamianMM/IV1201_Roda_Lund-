@@ -17,6 +17,7 @@ import javax.persistence.Id;
 @Entity(name="Competence_Profile")
 public class CompetenceProfile implements Serializable{
 
+    
     private int years_of_experience;
     
     @Id
@@ -42,5 +43,4 @@ public class CompetenceProfile implements Serializable{
         this.competence = competence;
         person = email;
     }
-    
 }
