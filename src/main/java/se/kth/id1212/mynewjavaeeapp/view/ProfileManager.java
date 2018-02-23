@@ -89,7 +89,7 @@ public class ProfileManager implements Serializable{
      *  Called when the user press the submit button to add competence
      */
     public void addCompetence(){
-        controller.addCompetence(experience, chosenCompetence, user.getEmail());
+        controller.addCompetence(experience, chosenCompetence, user);
     }
     
     /**

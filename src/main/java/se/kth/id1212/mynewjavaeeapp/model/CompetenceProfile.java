@@ -8,6 +8,8 @@ package se.kth.id1212.mynewjavaeeapp.model;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * A persistence representation of a users competence profile
@@ -21,11 +23,19 @@ public class CompetenceProfile implements Serializable{
     private int years_of_experience;
     
     @Id
-    private String competence;
+    @ManyToOne(optional=false)
+    @JoinColumn(name="competence_name",referencedColumnName="competence_name")    
+    private Competence competence;
     
+    /*
     @Id
     private String person;
+    */
     
+    @Id
+    @ManyToOne(optional=false)
+    @JoinColumn(name="email",referencedColumnName="email")
+    private User person;
     /**
      * Creates a new instance of a competence profile
      */
@@ -36,11 +46,11 @@ public class CompetenceProfile implements Serializable{
      * 
      * @param years_of_experience A users experience in number of years for the chosen competence
      * @param competence Users competence
-     * @param email User identifier
+     * @param user User identifier
      */
-    public CompetenceProfile(int years_of_experience, String competence, String email){
+    public CompetenceProfile(int years_of_experience, Competence competence, UserDTO user){
         this.years_of_experience = years_of_experience;
         this.competence = competence;
-        person = email;
+        person = (User) user;
     }
 }

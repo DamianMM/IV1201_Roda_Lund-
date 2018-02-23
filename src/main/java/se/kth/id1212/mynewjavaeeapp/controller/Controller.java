@@ -64,8 +64,8 @@ public class Controller {
      * @param competence Users competence
      * @param userEmail User identifier
      */
-    public void addCompetence(int experience, String competence, String userEmail) {
-        dB.addCompetence(new CompetenceProfile(experience, competence, userEmail));
+    public void addCompetence(int experience, String competence, UserDTO user) {
+        dB.addCompetence(new CompetenceProfile(experience, competence, user));
     }
 
     /**
