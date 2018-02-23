@@ -39,7 +39,7 @@ public class ProfileManager implements Serializable{
     private ArrayList<CompetenceDTO> competences;
     
     @NotNull(message="Choose one of the available competences.")
-    private String chosenCompetence;
+    private CompetenceDTO chosenCompetence;
     
     @NotNull(message = "Experience field is required!")
     @Min(value=1, message = "You must have at least one year of experience.")
@@ -68,14 +68,18 @@ public class ProfileManager implements Serializable{
      * @param chosenCompetence the chosenCompetence to set
      */
     public void setChosenCompetence(String chosenCompetence) {
-        this.chosenCompetence = chosenCompetence;
+        for (CompetenceDTO competence : competences) {
+            if(competence.getCompetence().equalsIgnoreCase(chosenCompetence)) {
+                this.chosenCompetence = competence;             
+            }
+        }
     }
 
     /**
      * @return List of all competences not already added to the users competence profile
      */
     public List<? extends CompetenceDTO> getCompetences() {
-        return controller.getCompetences(user.getEmail());
+        return controller.getCompetences(user);
     }
 
     /**

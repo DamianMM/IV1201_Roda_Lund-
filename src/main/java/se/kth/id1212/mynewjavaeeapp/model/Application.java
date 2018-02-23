@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,9 +34,15 @@ public class Application implements Serializable {
     @Temporal(TemporalType.DATE)
     Date register_date;
     
-    String person;
     
-    String status;
+    @ManyToOne(optional=false)
+    @JoinColumn(name="EMAIL",referencedColumnName="EMAIL")    
+    User person;
+    
+    
+    @ManyToOne(optional=false)
+    @JoinColumn(name="DESCRIPTION",referencedColumnName="DESCRIPTION")    
+    ApplicationStatus status;
     
     @Temporal(TemporalType.DATE)
     Date from_date;
@@ -55,10 +63,10 @@ public class Application implements Serializable {
      * @param availableFrom User is available for work from this date
      * @param availableTo User is available for work to this date
      */
-    public Application(String userEmail, Date availableFrom, Date availableTo){
+    public Application(UserDTO user, Date availableFrom, Date availableTo, ApplicationStatus status){
         register_date = Calendar.getInstance().getTime();
-        person = userEmail;
-        status = "PENDING";
+        person = (User) user;
+        this.status = status;
         from_date = availableFrom;
         to_date = availableTo;
     }

@@ -5,14 +5,20 @@
  */
 package se.kth.id1212.mynewjavaeeapp.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
- * 
+ *
  * @author mikaelnorberg
  */
-public interface CompetenceDTO {
 
-
-    @Override
-    public String toString();
-    public String getCompetence();
+@Entity(name="Actor")
+public class Actor implements Serializable {
+    
+    @Id
+    private String actor_name;
+    
+    public Actor() {}
 }

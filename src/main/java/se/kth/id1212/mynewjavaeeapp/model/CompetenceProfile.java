@@ -24,7 +24,7 @@ public class CompetenceProfile implements Serializable{
     
     @Id
     @ManyToOne(optional=false)
-    @JoinColumn(name="competence_name",referencedColumnName="competence_name")    
+    @JoinColumn(name="COMPETENCE",referencedColumnName="COMPETENCE")    
     private Competence competence;
     
     /*
@@ -34,8 +34,10 @@ public class CompetenceProfile implements Serializable{
     
     @Id
     @ManyToOne(optional=false)
-    @JoinColumn(name="email",referencedColumnName="email")
+    @JoinColumn(name="PERSON",referencedColumnName="PERSON")
     private User person;
+    
+    
     /**
      * Creates a new instance of a competence profile
      */
@@ -48,9 +50,9 @@ public class CompetenceProfile implements Serializable{
      * @param competence Users competence
      * @param user User identifier
      */
-    public CompetenceProfile(int years_of_experience, Competence competence, UserDTO user){
+    public CompetenceProfile(int years_of_experience, CompetenceDTO competence, UserDTO user){
         this.years_of_experience = years_of_experience;
-        this.competence = competence;
+        this.competence = (Competence) competence;
         person = (User) user;
     }
 }

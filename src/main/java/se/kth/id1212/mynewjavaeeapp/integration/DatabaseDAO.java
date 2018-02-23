@@ -8,7 +8,9 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import se.kth.id1212.mynewjavaeeapp.model.Actor;
 import se.kth.id1212.mynewjavaeeapp.model.Application;
+import se.kth.id1212.mynewjavaeeapp.model.ApplicationStatus;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
@@ -44,15 +46,23 @@ public class DatabaseDAO {
     public UserDTO findUser(String email) throws NoResultException {
        return em.find(User.class, email);
     }
+    
+    public Actor findActorApplicant(String actor) {
+        return em.find(Actor.class, actor);
+    }
+    
+    public ApplicationStatus findApplicationStatus(String status) {
+        return em.find(ApplicationStatus.class, status);
+    }
 
     /**
      * Lists all competences not already added to the users competence profile
      * @param email user identifier
      * @return List of competences
      */
-    public List<Competence> findAllCompetences(String email) {
+    public List<Competence> findAllCompetences(User user) {
         return em.createNamedQuery("findAllCompetencesNotAllreadyPartOfCompetenceProfile", Competence.class).
-                setParameter("userEmail", email).
+                setParameter("userEmail", user).
                 getResultList();
     }
 

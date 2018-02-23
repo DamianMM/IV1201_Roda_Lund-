@@ -22,13 +22,15 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
         @NamedQuery(
             name = "findAllCompetencesNotAllreadyPartOfCompetenceProfile",
-            query = "SELECT cmpt FROM Competence cmpt WHERE cmpt.competence_name NOT IN (SELECT cmpt_profile.competence FROM Competence_Profile cmpt_profile WHERE cmpt_profile.person LIKE :userEmail)"
+            query = "SELECT cmpt FROM Competence cmpt WHERE cmpt NOT IN (SELECT cmpt_profile.competence FROM Competence_Profile cmpt_profile WHERE cmpt_profile.person = :userEmail)"
     )
 })
 
 
 @Entity(name="Competence")
 public class Competence implements CompetenceDTO, Serializable{
+    
+    
     @Id
     private String competence_name;
     
@@ -39,6 +41,11 @@ public class Competence implements CompetenceDTO, Serializable{
 
     @Override
     public String toString() {
+        return getCompetence();
+    }
+
+    @Override
+    public String getCompetence() {
         return competence_name;
     }
 }

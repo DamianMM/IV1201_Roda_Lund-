@@ -5,8 +5,11 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -44,13 +47,12 @@ public class User implements UserDTO, Serializable {
     @NotNull
     private Date date_of_birth;
     
-       
-    
     @Size(min=3, max=100)
     private String password;
     
-    
-    private String actor;
+    @ManyToOne(optional=false)
+    @JoinColumn(name = "ACTOR") 
+    private Actor actor;
 
     /**
      * creates a new instance of a user object
@@ -62,14 +64,15 @@ public class User implements UserDTO, Serializable {
      * creates a new instance of a user object
      * 
      * @param userInfo information about the current user
+     * @param actor specifies the users role
      */
-    public User(UserInfoDTO userInfo){
+    public User(UserInfoDTO userInfo, Actor actor){
         first_name = userInfo.getFirst_name();
         last_name = userInfo.getLast_name();
         date_of_birth = userInfo.getDate_of_birth();
         email = userInfo.getEmail();
         password = userInfo.getPassword();
-        actor = "applicant";
+        this.actor = actor;
     }
 
     

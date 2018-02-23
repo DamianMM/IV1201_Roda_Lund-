@@ -10,8 +10,11 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
 import se.kth.id1212.mynewjavaeeapp.integration.DatabaseDAO;
+import se.kth.id1212.mynewjavaeeapp.model.Actor;
 import se.kth.id1212.mynewjavaeeapp.model.Application;
+import se.kth.id1212.mynewjavaeeapp.model.ApplicationStatus;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
+import se.kth.id1212.mynewjavaeeapp.model.CompetenceDTO;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
@@ -35,8 +38,8 @@ public class Controller {
      * @throws EntityExistsException Thrown if user is already registered.
      */
     public void registerUser(UserInfoDTO userInfo) throws EntityExistsException {
-       dB.registerUser(new User(userInfo));
-       
+        Actor actor = dB.findActorApplicant("applicant");
+        dB.registerUser(new User(userInfo, actor));       
     }
 
     /**
@@ -54,17 +57,19 @@ public class Controller {
      * @param email User identifier
      * @return List of all competences not already added to the users competence profile
      */
-    public List<Competence> getCompetences(String email) {
-        return dB.findAllCompetences(email);
+    public List<Competence> getCompetences(UserDTO userDTO) {
+        User user = (User) userDTO;
+        return dB.findAllCompetences(user);
     }
 
     /**
      *
      * @param experience Number of years of experience for the chosen competence
      * @param competence Users competence
+     * @param user
      * @param userEmail User identifier
      */
-    public void addCompetence(int experience, String competence, UserDTO user) {
+    public void addCompetence(int experience, CompetenceDTO competence, UserDTO user) {
         dB.addCompetence(new CompetenceProfile(experience, competence, user));
     }
 
@@ -75,6 +80,7 @@ public class Controller {
      * @param availableTo User is available for work to this date
      */
     public void addApplication(UserDTO user, Date availableFrom, Date availableTo) {
-        dB.addApplication(new Application(user.getEmail(), availableFrom, availableTo));
+        ApplicationStatus status = dB.findApplicationStatus("PENDING");
+        dB.addApplication(new Application(user, availableFrom, availableTo, status));
     }
 }
