@@ -55,4 +55,25 @@ public class CompetenceProfile implements Serializable{
         this.competence = (Competence) competence;
         person = (User) user;
     }
+
+    /**
+     * @return the years_of_experience
+     */
+    public int getYears_of_experience() {
+        return years_of_experience;
+    }
+
+    /**
+     * @return the competence
+     */
+    public Competence getCompetence() {
+        return competence;
+    }
+
+    /**
+     * @return the person
+     */
+    public User getPerson() {
+        return person;
+    }
 }

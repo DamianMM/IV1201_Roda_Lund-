@@ -6,6 +6,7 @@
 package se.kth.id1212.mynewjavaeeapp.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -22,7 +23,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
         @NamedQuery(
             name = "findAllCompetencesNotAllreadyPartOfCompetenceProfile",
-            query = "SELECT cmpt FROM Competence cmpt WHERE cmpt NOT IN (SELECT cmpt_profile.competence FROM Competence_Profile cmpt_profile WHERE cmpt_profile.person = :userEmail)"
+            query = "SELECT c FROM Competence as c, Competence_Profile as cp, Person as p WHERE c != cp.competence AND cp.person = :user"
     )
 })
 
@@ -32,6 +33,7 @@ public class Competence implements CompetenceDTO, Serializable{
     
     
     @Id
+    @Column(name="COMPETENCE_NAME")
     private String competence_name;
     
     /**

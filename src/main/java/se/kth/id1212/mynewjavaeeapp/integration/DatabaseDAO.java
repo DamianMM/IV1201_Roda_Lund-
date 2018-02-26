@@ -62,7 +62,7 @@ public class DatabaseDAO {
      */
     public List<Competence> findAllCompetences(User user) {
         return em.createNamedQuery("findAllCompetencesNotAllreadyPartOfCompetenceProfile", Competence.class).
-                setParameter("userEmail", user).
+                setParameter("user", user).
                 getResultList();
     }
 
