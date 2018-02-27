@@ -57,6 +57,7 @@
                 <h:outputLabel for="User" value="From: yyyy-mm-dd"/>
             </p>
             
+            <h
             <p>
                 <h:inputText id="availableTo" value="#{profileManager.availableTo}" label="Available to">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
@@ -64,12 +65,25 @@
                 <h:message for="availableTo"/>
             </p>
             
-           
+            
             <p>
-                <h:commandButton value="submit" action="#{profileManager.addApplication}"/>
+                <h:commandButton value="apply" action="#{profileManager.submitApplication}"/>
             </p>
         </h:form>
         <hr/>
+        
+        <c:choose>
+            <c:when test="#{profileManager.application}">
+                <h3>Application</h3>
+            </c:when>
+        </c:choose>
+        <ui:repeat var="profile" value="#{profileManager.competenceProfile}">
+            <p>
+                #{profile}
+            </p>
+        </ui:repeat>
+        <hr/>
+
         <ui:insert name = "footer" >
             <ui:include src = "/fragments/footer.xhtml" />
         </ui:insert>

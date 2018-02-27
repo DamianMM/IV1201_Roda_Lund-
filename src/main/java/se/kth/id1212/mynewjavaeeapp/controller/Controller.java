@@ -56,9 +56,8 @@ public class Controller {
      * @param email User identifier
      * @return List of all competences not already added to the users competence profile
      */
-    public List<Competence> getCompetences(UserDTO userDTO) {
-        User user = (User) userDTO;
-        return dB.findAllCompetences(user);
+    public List<Competence> getCompetences(UserDTO user) {
+        return dB.findAllCompetences((User)user);
     }
 
     /**
@@ -81,5 +80,9 @@ public class Controller {
     public void addApplication(UserDTO user, Date availableFrom, Date availableTo) {
         ApplicationStatus status = dB.findApplicationStatus("PENDING");
         dB.addApplication(new Application(user, availableFrom, availableTo, status));
+    }
+
+    public List<CompetenceProfile> findAllCompetenceProfilesForUser(UserDTO user) {
+        return dB.findAllCompetenceProfilesForUser((User)user);
     }
 }

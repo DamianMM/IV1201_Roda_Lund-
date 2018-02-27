@@ -22,8 +22,8 @@ import javax.persistence.NamedQuery;
 
 @NamedQueries({
         @NamedQuery(
-            name = "findCompetenceProfiles",
-            query = "SELECT cp.competence FROM Competence_Profile cp"
+            name = "findAllCompetenceProfilesForUser",
+            query = "SELECT cp FROM Competence_Profile cp WHERE cp.person = :user"
     )
 })
 
@@ -87,5 +87,11 @@ public class CompetenceProfile implements Serializable{
      */
     public User getPerson() {
         return person;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return "Expertise: " + getCompetence() +", Years of experience: " + getYears_of_experience();
     }
 }

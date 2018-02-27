@@ -36,12 +36,12 @@ public class Application implements Serializable {
     
     
     @ManyToOne(optional=false)
-    @JoinColumn(name="EMAIL",referencedColumnName="EMAIL")    
+    @JoinColumn(name="PERSON",referencedColumnName="EMAIL")    
     User person;
     
     
     @ManyToOne(optional=false)
-    @JoinColumn(name="DESCRIPTION",referencedColumnName="DESCRIPTION")    
+    @JoinColumn(name="STATUS",referencedColumnName="DESCRIPTION")    
     ApplicationStatus status;
     
     @Temporal(TemporalType.DATE)

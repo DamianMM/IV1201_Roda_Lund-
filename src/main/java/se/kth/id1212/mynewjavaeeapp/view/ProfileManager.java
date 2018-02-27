@@ -22,6 +22,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import se.kth.id1212.mynewjavaeeapp.controller.Controller;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
+import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 
 /**
@@ -53,6 +54,12 @@ public class ProfileManager implements Serializable{
     
     @NotNull(message = "To date is required!")
     private Date availableTo;
+    
+    
+    private List<CompetenceProfile> competenceProfile;
+    
+    //private boolean application = false;
+
     
     private UIComponent availableto;
 
@@ -100,7 +107,7 @@ public class ProfileManager implements Serializable{
     /**
      * Called when the user press the submit button to add application for a job
      */
-    public void addApplication(){
+    public void submitApplication(){
         if(availableTo.after(availableFrom)){
             controller.addApplication(user, availableFrom, availableTo);            
         } else {
@@ -176,6 +183,35 @@ public class ProfileManager implements Serializable{
      */
     public void setAvailableTo(Date availableTo) {
         this.availableTo = availableTo;
+    }
+
+    /**
+     * @return the competenceProfile
+     */
+    public List<CompetenceProfile> getCompetenceProfile() {
+        competenceProfile = controller.findAllCompetenceProfilesForUser(user);
+        return competenceProfile;
+    }
+
+    /**
+     * @param competenceProfile the competenceProfile to set
+     */
+    public void setCompetenceProfile(CompetenceProfile competenceProfile) {
+    }
+
+    /**
+     * @return the application
+     */
+    public boolean isApplication() {
+        boolean result = competenceProfile != null;
+        System.out.println(result);
+        return result;
+    }
+
+    /**
+     * @param application the application to set
+     */
+    public void setApplication(boolean application) {
     }
 
    
