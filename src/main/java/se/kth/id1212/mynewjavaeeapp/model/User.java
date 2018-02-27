@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -51,7 +50,7 @@ public class User implements UserDTO, Serializable {
     private String password;
     
     @ManyToOne(optional=false)
-    @JoinColumn(name = "ACTOR") 
+    @JoinColumn(name = "ACTOR", referencedColumnName="ACTOR_NAME") 
     private Actor actor;
 
     /**
@@ -124,5 +123,4 @@ public class User implements UserDTO, Serializable {
     public String toString(){
         return this.email;
     }
-
 }

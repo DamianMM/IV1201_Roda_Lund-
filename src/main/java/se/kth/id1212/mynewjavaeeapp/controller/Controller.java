@@ -14,7 +14,6 @@ import se.kth.id1212.mynewjavaeeapp.model.Actor;
 import se.kth.id1212.mynewjavaeeapp.model.Application;
 import se.kth.id1212.mynewjavaeeapp.model.ApplicationStatus;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
-import se.kth.id1212.mynewjavaeeapp.model.CompetenceDTO;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.User;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
@@ -69,7 +68,7 @@ public class Controller {
      * @param user
      * @param userEmail User identifier
      */
-    public void addCompetence(int experience, CompetenceDTO competence, UserDTO user) {
+    public void addCompetence(int experience, Competence competence, UserDTO user) {
         dB.addCompetence(new CompetenceProfile(experience, competence, user));
     }
 

@@ -21,7 +21,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import se.kth.id1212.mynewjavaeeapp.controller.Controller;
-import se.kth.id1212.mynewjavaeeapp.model.CompetenceDTO;
+import se.kth.id1212.mynewjavaeeapp.model.Competence;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 
 /**
@@ -36,10 +36,10 @@ public class ProfileManager implements Serializable{
     @EJB
     private Controller controller;
     
-    private ArrayList<CompetenceDTO> competences;
+    private List<Competence> competences;
     
     @NotNull(message="Choose one of the available competences.")
-    private CompetenceDTO chosenCompetence;
+    private Competence chosenCompetence;
     
     @NotNull(message = "Experience field is required!")
     @Min(value=1, message = "You must have at least one year of experience.")
@@ -68,9 +68,9 @@ public class ProfileManager implements Serializable{
      * @param chosenCompetence the chosenCompetence to set
      */
     public void setChosenCompetence(String chosenCompetence) {
-        for (CompetenceDTO competence : competences) {
-            if(competence.getCompetence().equalsIgnoreCase(chosenCompetence)) {
-                this.chosenCompetence = competence;             
+        for (Competence comp : competences) {
+            if(comp.getCompetence().equalsIgnoreCase(chosenCompetence)) {
+                this.chosenCompetence = comp;
             }
         }
     }
@@ -78,14 +78,15 @@ public class ProfileManager implements Serializable{
     /**
      * @return List of all competences not already added to the users competence profile
      */
-    public List<? extends CompetenceDTO> getCompetences() {
-        return controller.getCompetences(user);
+    public List<Competence> getCompetences() {
+        competences = controller.getCompetences(user);
+        return competences;
     }
 
     /**
      * @param competences the competences to set
      */
-    public void setCompetences(ArrayList<CompetenceDTO> competences) {
+    public void setCompetences(ArrayList<Competence> competences) {
         this.competences = competences;
     }
     

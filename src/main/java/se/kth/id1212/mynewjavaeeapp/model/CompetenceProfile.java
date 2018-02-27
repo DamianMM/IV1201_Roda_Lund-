@@ -10,12 +10,24 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * A persistence representation of a users competence profile
  * 
  * @author mikaelnorberg
  */
+
+
+@NamedQueries({
+        @NamedQuery(
+            name = "findCompetenceProfiles",
+            query = "SELECT cp.competence FROM Competence_Profile cp"
+    )
+})
+
+
 @Entity(name="Competence_Profile")
 public class CompetenceProfile implements Serializable{
 
@@ -24,7 +36,7 @@ public class CompetenceProfile implements Serializable{
     
     @Id
     @ManyToOne(optional=false)
-    @JoinColumn(name="COMPETENCE",referencedColumnName="COMPETENCE")    
+    @JoinColumn(name="COMPETENCE",referencedColumnName="COMPETENCE_NAME")    
     private Competence competence;
     
     /*
@@ -34,7 +46,7 @@ public class CompetenceProfile implements Serializable{
     
     @Id
     @ManyToOne(optional=false)
-    @JoinColumn(name="PERSON",referencedColumnName="PERSON")
+    @JoinColumn(name="PERSON",referencedColumnName="EMAIL")
     private User person;
     
     
@@ -50,9 +62,9 @@ public class CompetenceProfile implements Serializable{
      * @param competence Users competence
      * @param user User identifier
      */
-    public CompetenceProfile(int years_of_experience, CompetenceDTO competence, UserDTO user){
+    public CompetenceProfile(int years_of_experience, Competence competence, UserDTO user){
         this.years_of_experience = years_of_experience;
-        this.competence = (Competence) competence;
+        this.competence = competence;
         person = (User) user;
     }
 

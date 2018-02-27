@@ -61,7 +61,7 @@ public class DatabaseDAO {
      * @return List of competences
      */
     public List<Competence> findAllCompetences(User user) {
-        return em.createNamedQuery("findAllCompetencesNotAllreadyPartOfCompetenceProfile", Competence.class).
+        return em.createNamedQuery("findAllCompetencesNotAlreadyInCompetenceProfile", Competence.class).
                 setParameter("user", user).
                 getResultList();
     }
