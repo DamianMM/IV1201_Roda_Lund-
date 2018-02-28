@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +25,17 @@ import javax.persistence.TemporalType;
  * 
  * @author mikaelnorberg
  */
+
+
+@NamedQueries({
+        @NamedQuery(
+            name = "findAllApplicationsForUser",
+            query = "SELECT app FROM Application app WHERE app.person = :user"
+    )
+})
+
+
+
 @Entity(name="Application")
 public class Application implements Serializable {
     
@@ -69,6 +82,11 @@ public class Application implements Serializable {
         this.status = status;
         from_date = availableFrom;
         to_date = availableTo;
+    }
+    
+    @Override
+    public String toString(){
+        return " Availability: " + from_date + " -- " + to_date +".";
     }
     
 }

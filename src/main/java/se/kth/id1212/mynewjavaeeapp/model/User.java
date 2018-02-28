@@ -32,13 +32,16 @@ public class User implements UserDTO, Serializable {
     
     @Id
     @Pattern(regexp = "[a-z0-9]+@[a-z0-9]+\\.[a-z0-9]+")
+    @NotNull
     private String email;
     
     @Size(min=1, max=100)
+    @NotNull
     private String first_name;
     
     
     @Size(min=1, max=100)
+    @NotNull
     private String last_name;
     
     
@@ -51,6 +54,7 @@ public class User implements UserDTO, Serializable {
     
     @ManyToOne(optional=false)
     @JoinColumn(name = "ACTOR", referencedColumnName="ACTOR_NAME") 
+    @NotNull
     private Actor actor;
 
     /**

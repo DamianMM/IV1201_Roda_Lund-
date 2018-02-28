@@ -85,4 +85,8 @@ public class Controller {
     public List<CompetenceProfile> findAllCompetenceProfilesForUser(UserDTO user) {
         return dB.findAllCompetenceProfilesForUser((User)user);
     }
+
+    public List<Application> findAllApplicationsForUser(UserDTO user) {
+        return dB.findAllApplicationsForUser((User)user);
+    }
 }

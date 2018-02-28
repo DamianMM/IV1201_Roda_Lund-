@@ -10,7 +10,9 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +23,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import se.kth.id1212.mynewjavaeeapp.controller.Controller;
+import se.kth.id1212.mynewjavaeeapp.model.Application;
 import se.kth.id1212.mynewjavaeeapp.model.Competence;
 import se.kth.id1212.mynewjavaeeapp.model.CompetenceProfile;
 import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
@@ -33,6 +36,7 @@ import se.kth.id1212.mynewjavaeeapp.model.UserDTO;
 @Named("profileManager")
 @ManagedBean
 @SessionScoped
+@Stateful
 public class ProfileManager implements Serializable{
     @EJB
     private Controller controller;
@@ -57,6 +61,8 @@ public class ProfileManager implements Serializable{
     
     
     private List<CompetenceProfile> competenceProfile;
+    
+    private List<Application> userApplications;
     
     //private boolean application = false;
 
@@ -108,8 +114,9 @@ public class ProfileManager implements Serializable{
      * Called when the user press the submit button to add application for a job
      */
     public void submitApplication(){
-        if(availableTo.after(availableFrom)){
-            controller.addApplication(user, availableFrom, availableTo);            
+        if(availableFrom.before(availableTo)){
+            controller.addApplication(user, availableFrom, availableTo); 
+            userApplications = controller.findAllApplicationsForUser(user);
         } else {
             FacesMessage message = new FacesMessage("to date must be after from date.");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -139,12 +146,6 @@ public class ProfileManager implements Serializable{
      * @return The logged in user for the current session
      */
     public UserDTO getUser() {
-        if (user == null) {
-            Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-            if (principal != null) {
-                user = controller.findUser(principal.getName());
-            }
-        }
         return user;
     }
         
@@ -189,7 +190,6 @@ public class ProfileManager implements Serializable{
      * @return the competenceProfile
      */
     public List<CompetenceProfile> getCompetenceProfile() {
-        competenceProfile = controller.findAllCompetenceProfilesForUser(user);
         return competenceProfile;
     }
 
@@ -199,20 +199,38 @@ public class ProfileManager implements Serializable{
     public void setCompetenceProfile(CompetenceProfile competenceProfile) {
     }
 
+
     /**
-     * @return the application
+     * @return the userApplications
      */
-    public boolean isApplication() {
-        boolean result = competenceProfile != null;
-        System.out.println(result);
-        return result;
+    public List<Application> getUserApplications() {
+        return userApplications;
     }
 
     /**
-     * @param application the application to set
+     * @param userApplications the userApplications to set
      */
-    public void setApplication(boolean application) {
+    public void setUserApplications(List<Application> userApplications) {
     }
-
-   
+    
+    public boolean getAvailableCompetence(){
+        return competenceProfile != null;
+    }
+    
+    public boolean getAvailableApplication(){
+        return competenceProfile != null;
+    }
+        
+    @PostConstruct
+    public void init(){
+        if (user == null) {
+            Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+            if (principal != null) {
+                user = controller.findUser(principal.getName());
+                userApplications = controller.findAllApplicationsForUser(user);
+                competenceProfile = controller.findAllCompetenceProfilesForUser(user);
+            }
+        }
+        
+    }
 }

@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <head>
-        <title>TODO supply a title</title>
+        <title>Röda Lund Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
@@ -18,7 +18,9 @@ and open the template in the editor.
             <ui:include src = "/fragments/header.xhtml" />
         </ui:insert>         
         <form method="POST" action="j_security_check">
+            <h:outputText value="Username:"/>
             <input type="text" name="j_username"/>
+            <h:outputText value="Password:"/>
             <input type="password" name="j_password"/>
             <p>
                 <input type="submit" value="Login" action="true"/>

@@ -15,11 +15,12 @@
         <h1>Profile</h1>
         <hr/>
         <p>
-            <h:outputText value="#{profileManager.user}"/>
+            <h:outputText value="Logged in user: #{profileManager.user}"/>
         </p>
         <h:form>
             <h:commandButton value="logout" action="#{profileManager.logout}" />
         </h:form>
+        <hr/>
         <h:form>
             <h3>Add competence</h3>
             <p>
@@ -57,7 +58,6 @@
                 <h:outputLabel for="User" value="From: yyyy-mm-dd"/>
             </p>
             
-            <h
             <p>
                 <h:inputText id="availableTo" value="#{profileManager.availableTo}" label="Available to">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
@@ -72,20 +72,27 @@
         </h:form>
         <hr/>
         
-        <c:choose>
-            <c:when test="#{profileManager.application}">
-                <h3>Application</h3>
-            </c:when>
-        </c:choose>
-        <ui:repeat var="profile" value="#{profileManager.competenceProfile}">
-            <p>
-                #{profile}
-            </p>
-        </ui:repeat>
-        <hr/>
+        <c:if test="#{profileManager.availableCompetence}">
+            <h3>Your Competences</h3>
+            <ui:repeat var="competence" value="#{profileManager.competenceProfile}">
+                <p>
+                    #{competence}
+                </p>
+            </ui:repeat>
+        </c:if>
+        <c:if test="#{profileManager.availableApplication}">
+            <h3>Your Availability Periods</h3>
+            <ui:repeat var="app" value="#{profileManager.userApplications}">
+                <p>
+                    #{app}
+                </p>
+            </ui:repeat>
+            <hr/>
+        </c:if>
 
         <ui:insert name = "footer" >
             <ui:include src = "/fragments/footer.xhtml" />
         </ui:insert>
+        <hr/>
     </h:body>
 </html>

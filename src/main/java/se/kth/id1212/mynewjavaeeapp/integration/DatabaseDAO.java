@@ -71,6 +71,12 @@ public class DatabaseDAO {
                 setParameter("user", user).
                 getResultList();
     }
+    
+    public List<Application> findAllApplicationsForUser(User user) {
+        return em.createNamedQuery("findAllApplicationsForUser", Application.class).
+                setParameter("user", user).
+                getResultList();
+    }
 
     /**
      * Add a competence profile for current user
