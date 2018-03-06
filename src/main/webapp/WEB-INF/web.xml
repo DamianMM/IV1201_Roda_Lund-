@@ -81,4 +81,13 @@
             <role-name>recruiter</role-name>
         </auth-constraint>
     </security-constraint>
+    
+    <error-page>
+        <exception-type>
+            java.lang.Exception
+        </exception-type>
+        <location>
+            /error.xhtml
+        </location>
+    </error-page>
 </web-app>

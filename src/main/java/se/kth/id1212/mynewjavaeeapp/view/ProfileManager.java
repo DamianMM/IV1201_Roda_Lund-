@@ -49,7 +49,6 @@ public class ProfileManager implements Serializable{
     private UserDTO user;
     
     @NotNull(message="Choose one of the available competences.")
-    @Min(value=1, message = "No available competences to submit.")
     private Competence chosenCompetence;
     
     @NotNull(message = "Experience field is required!")
@@ -69,21 +68,26 @@ public class ProfileManager implements Serializable{
      * initializes profile manager objects.
      */
     @PostConstruct
-    public void init(){
+    public void init() throws IllegalStateException {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         if (principal != null) {
-            user = controller.findUser(principal.getName());
-            userApplications = controller.findAllApplicationsForUser(user);
-            competenceProfile = controller.findAllCompetenceProfilesForUser(user);
-            competences = controller.getCompetences(user);
+            try {
+                user = controller.findUser(principal.getName());
+                userApplications = controller.findAllApplicationsForUser(user);
+                competenceProfile = controller.findAllCompetenceProfilesForUser(user);
+                competences = controller.getCompetences(user);
+            } catch (Exception e) {
+                throw new IllegalStateException(e);
+            }
         }
     }
 
     
     /**
-     *  Called when the user press the submit button to add competence
+     * Called when the user press the submit button to add competence
+     * @throws java.lang.Exception when exception occurs
      */
-    public void addCompetence(){
+    public void addCompetence() throws Exception{
         controller.addCompetence(experience, chosenCompetence, user);
         competences = controller.getCompetences(user);
         competenceProfile = controller.findAllCompetenceProfilesForUser(user);
@@ -91,10 +95,11 @@ public class ProfileManager implements Serializable{
     
     /**
      * Called when the user press the submit button to add application for a jobs
+     * @throws java.lang.Exception when exception occurs
      */
-    public void submitApplication(){
+    public void submitApplication() throws Exception{
         if(availableFrom.before(availableTo)){
-            controller.addApplication(user, availableFrom, availableTo); 
+            controller.addApplication(user, availableFrom, availableTo);
             userApplications = controller.findAllApplicationsForUser(user);
         } else {
             FacesMessage message = new FacesMessage("to date must be after from date.");
@@ -109,8 +114,9 @@ public class ProfileManager implements Serializable{
     /**
      * Logout the current user by invalidating session.
      * @return Redirect to index.xhtml
+     * @throws java.lang.Exception when exception occurs
      */
-    public String logout() {
+    public String logout() throws Exception{
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/index.xhtml?faces-redirect=true";
     }

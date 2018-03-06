@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityExistsException;
-import javax.persistence.NoResultException;
 import se.kth.id1212.mynewjavaeeapp.integration.DatabaseDAO;
 import se.kth.id1212.mynewjavaeeapp.model.Actor;
 import se.kth.id1212.mynewjavaeeapp.model.Application;
@@ -34,9 +33,9 @@ public class Controller {
     /**
      *
      * @param userInfo user information entered by the user
-     * @throws EntityExistsException Thrown if user is already registered.
+     * @throws java.lang.Exception for all exceptions
      */
-    public void registerUser(UserInfoDTO userInfo) throws EntityExistsException {
+    public void registerUser(UserInfoDTO userInfo) throws Exception {
         Actor actor = dB.findActorApplicant("applicant");
         dB.registerUser(new User(userInfo, actor));
     }
@@ -45,9 +44,9 @@ public class Controller {
      *
      * @param email User identifier
      * @return A user as a UserDTO
-     * @throws NoResultException if user not found
+     * @throws java.lang.Exception for all exceptions
      */
-    public UserDTO findUser(String email) throws NoResultException {
+    public UserDTO findUser(String email) throws Exception {
         return dB.findUser(email);
     }
 
@@ -55,8 +54,9 @@ public class Controller {
      *
      * @param user to get competences for.
      * @return List of all competences not already added to the users competence profile
+     * @throws java.lang.Exception for all exceptions
      */
-    public List<Competence> getCompetences(UserDTO user) {
+    public List<Competence> getCompetences(UserDTO user) throws Exception {
         return dB.findAllCompetences((User)user);
     }
 
@@ -65,8 +65,9 @@ public class Controller {
      * @param experience Number of years of experience for the chosen competence
      * @param competence Users competence
      * @param user to add competence for.
+     * @throws java.lang.Exception for all exceptions
      */
-    public void addCompetence(int experience, Competence competence, UserDTO user) {
+    public void addCompetence(int experience, Competence competence, UserDTO user) throws Exception {
         dB.addCompetence(new CompetenceProfile(experience, competence, user));
     }
 
@@ -75,8 +76,9 @@ public class Controller {
      * @param user to add application info for.
      * @param availableFrom User is available for work from this date
      * @param availableTo User is available for work to this date
+     * @throws java.lang.Exception for all exceptions
      */
-    public void addApplication(UserDTO user, Date availableFrom, Date availableTo) {
+    public void addApplication(UserDTO user, Date availableFrom, Date availableTo) throws Exception {
         ApplicationStatus status = dB.findApplicationStatus("PENDING");
         dB.addApplication(new Application(user, availableFrom, availableTo, status));
     }
@@ -85,8 +87,9 @@ public class Controller {
      *
      * @param user to get competence profiles for.
      * @return List of competence profiles of @param user. 
+     * @throws java.lang.Exception for all exceptions
      */
-    public List<CompetenceProfile> findAllCompetenceProfilesForUser(UserDTO user) {
+    public List<CompetenceProfile> findAllCompetenceProfilesForUser(UserDTO user) throws Exception {
         return dB.findAllCompetenceProfilesForUser((User)user);
     }
 
@@ -94,8 +97,9 @@ public class Controller {
      *
      * @param user to get applications for.
      * @return List of applications of @param user. 
+     * @throws java.lang.Exception for all exceptions
      */
-    public List<Application> findAllApplicationsForUser(UserDTO user) {
+    public List<Application> findAllApplicationsForUser(UserDTO user) throws Exception {
         return dB.findAllApplicationsForUser((User)user);
     }
 }

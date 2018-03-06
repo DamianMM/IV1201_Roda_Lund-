@@ -31,9 +31,9 @@ public class DatabaseDAO {
     /**
      * Registers a new user
      * @param person The user who wants to register
-     * @throws EntityExistsException Thrown if user already exist in db
+     * @throws java.lang.Exception for all exceptions
      */
-    public void registerUser(User person) throws EntityExistsException{
+    public void registerUser(User person) throws Exception {
         em.persist(person);
     }
 
@@ -41,18 +41,19 @@ public class DatabaseDAO {
      * finds existing user by email
      * @param email user identifier
      * @return Found user
-     * @throws NoResultException if user is not registered
+     * @throws java.lang.Exception for all exceptions
      */
-    public UserDTO findUser(String email) throws NoResultException {
-       return em.find(User.class, email);
+    public UserDTO findUser(String email) throws Exception {
+        return em.find(User.class, email);
     }
     
     /**
      *
      * @param actor role to be found.
      * @return searched actor object.
+     * @throws java.lang.Exception for all exceptions
      */
-    public Actor findActorApplicant(String actor) {
+    public Actor findActorApplicant(String actor) throws Exception {
         return em.find(Actor.class, actor);
     }
     
@@ -60,8 +61,9 @@ public class DatabaseDAO {
      *
      * @param status to be found.
      * @return application status object.
+     * @throws java.lang.Exception for all exceptions
      */
-    public ApplicationStatus findApplicationStatus(String status) {
+    public ApplicationStatus findApplicationStatus(String status) throws Exception {
         return em.find(ApplicationStatus.class, status);
     }
 
@@ -69,8 +71,9 @@ public class DatabaseDAO {
      * Lists all competences not already added to the users competence profile
      * @param user used to not return competences already belonging to user.
      * @return List of competences not belonging to @param user.
+     * @throws java.lang.Exception for all exceptions
      */
-    public List<Competence> findAllCompetences(User user) {
+    public List<Competence> findAllCompetences(User user) throws Exception {
         return em.createNamedQuery("findAllCompetencesNotAlreadyInCompetenceProfile", Competence.class).
                 setParameter("user", user).
                 getResultList();
@@ -79,9 +82,10 @@ public class DatabaseDAO {
     /**
      *
      * @param user the user to get competence profiles for.
-     * @return list of competence profiles for @param user.   
+     * @return list of competence profiles for @param user.
+     * @throws java.lang.Exception for all exceptions
      */
-    public List<CompetenceProfile> findAllCompetenceProfilesForUser(User user) {
+    public List<CompetenceProfile> findAllCompetenceProfilesForUser(User user) throws Exception {
         return em.createNamedQuery("findAllCompetenceProfilesForUser", CompetenceProfile.class).
                 setParameter("user", user).
                 getResultList();
@@ -91,8 +95,9 @@ public class DatabaseDAO {
      *
      * @param user search for applications belonging to user.
      * @return list of applications belonging to user.
+     * @throws java.lang.Exception for all exceptions
      */
-    public List<Application> findAllApplicationsForUser(User user) {
+    public List<Application> findAllApplicationsForUser(User user) throws Exception {
         return em.createNamedQuery("findAllApplicationsForUser", Application.class).
                 setParameter("user", user).
                 getResultList();
@@ -101,16 +106,18 @@ public class DatabaseDAO {
     /**
      * Add a competence profile for current user
      * @param competenceProfile the users competence profile
+     * @throws java.lang.Exception for all exceptions
      */
-    public void addCompetence(CompetenceProfile competenceProfile) {
+    public void addCompetence(CompetenceProfile competenceProfile) throws Exception {
         em.persist(competenceProfile);
     }
 
     /**
      * Add a application for current user
      * @param application users application
+     * @throws java.lang.Exception for all exceptions
      */
-    public void addApplication(Application application) {
+    public void addApplication(Application application) throws Exception {
         em.persist(application);
     }
 }

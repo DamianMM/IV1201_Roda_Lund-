@@ -59,16 +59,22 @@ public class RegisterManager implements Serializable{
     
     /**
      * Registers user. Called when the user press the submit registration button.
+     * @return String with navigation outcome
      */
-    public void register() {
+    public String register() {
         
         user = new UserInfoDTO(firstName, lastName, dateOfBirth, email, password);
         try{
             registerFailure = null;
             controller.registerUser(user);
         }catch(Exception e){
-            registerFailure = e;
+            if(e.getMessage().equalsIgnoreCase("Transaction aborted")){
+                return "fail";
+            } else {
+                return "error";
+            }
         }
+        return "success";
     }    
     
     
