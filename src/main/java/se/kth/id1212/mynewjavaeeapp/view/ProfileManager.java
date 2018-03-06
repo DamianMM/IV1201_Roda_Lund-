@@ -41,9 +41,15 @@ public class ProfileManager implements Serializable{
     @EJB
     private Controller controller;
     
-    private List<Competence> competences;
+    private List<Competence> competences;    
+    private List<CompetenceProfile> competenceProfile;
+    private List<Application> userApplications;
+    private UIComponent component;    
+    
+    private UserDTO user;
     
     @NotNull(message="Choose one of the available competences.")
+    @Min(value=1, message = "No available competences to submit.")
     private Competence chosenCompetence;
     
     @NotNull(message = "Experience field is required!")
@@ -51,67 +57,40 @@ public class ProfileManager implements Serializable{
     @Max(value=70, message = "You must have at most 70 years of experience.")
     private int experience;
     
-    private UserDTO user;
-    
     @NotNull(message = "From date is required!")
     private Date availableFrom;
     
     @NotNull(message = "To date is required!")
     private Date availableTo;
-    
-    
-    private List<CompetenceProfile> competenceProfile;
-    
-    private List<Application> userApplications;
-    
-    //private boolean application = false;
 
     
-    private UIComponent availableto;
-
-
+    
     /**
-     * @return the chosenCompetence
+     * initializes profile manager objects.
      */
-    public String getChosenCompetence() {
-        return null;
-    }
-
-    /**
-     * @param chosenCompetence the chosenCompetence to set
-     */
-    public void setChosenCompetence(String chosenCompetence) {
-        for (Competence comp : competences) {
-            if(comp.getCompetence().equalsIgnoreCase(chosenCompetence)) {
-                this.chosenCompetence = comp;
-            }
+    @PostConstruct
+    public void init(){
+        Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+        if (principal != null) {
+            user = controller.findUser(principal.getName());
+            userApplications = controller.findAllApplicationsForUser(user);
+            competenceProfile = controller.findAllCompetenceProfilesForUser(user);
+            competences = controller.getCompetences(user);
         }
     }
 
-    /**
-     * @return List of all competences not already added to the users competence profile
-     */
-    public List<Competence> getCompetences() {
-        competences = controller.getCompetences(user);
-        return competences;
-    }
-
-    /**
-     * @param competences the competences to set
-     */
-    public void setCompetences(ArrayList<Competence> competences) {
-        this.competences = competences;
-    }
     
     /**
      *  Called when the user press the submit button to add competence
      */
     public void addCompetence(){
         controller.addCompetence(experience, chosenCompetence, user);
+        competences = controller.getCompetences(user);
+        competenceProfile = controller.findAllCompetenceProfilesForUser(user);
     }
     
     /**
-     * Called when the user press the submit button to add application for a job
+     * Called when the user press the submit button to add application for a jobs
      */
     public void submitApplication(){
         if(availableFrom.before(availableTo)){
@@ -120,37 +99,15 @@ public class ProfileManager implements Serializable{
         } else {
             FacesMessage message = new FacesMessage("to date must be after from date.");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("availableTo", message);
+            context.addMessage(component.getClientId(context), message);
             availableFrom = null;
             availableTo = null;
         }
     }
     
-
-    /**
-     * @return the experience 
-     */
-    public int getExperience() {
-        return experience;
-    }
-
-    /**
-     * @param experience the experience to set
-     */
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
     
     /**
-     *
-     * @return The logged in user for the current session
-     */
-    public UserDTO getUser() {
-        return user;
-    }
-        
-    /**
-     *
+     * Logout the current user by invalidating session.
      * @return Redirect to index.xhtml
      */
     public String logout() {
@@ -158,79 +115,102 @@ public class ProfileManager implements Serializable{
         return "/index.xhtml?faces-redirect=true";
     }
 
-    /**
-     * @return the availableFrom
-     */
+    
+    
+    
+    
+ 
+    //Setters AND Getters Below
+    
+    public UIComponent getComponent() {
+        return null;
+    }
+
+
+    public void setComponent(UIComponent component) {
+        this.component = component;
+    }
+    
+
+    public String getChosenCompetence() {
+        return null;
+    }
+ 
+        
+    public boolean getAvailableCompetence(){
+        return !competenceProfile.isEmpty();
+    }
+    
+    public boolean getAvailableCompetences(){
+        return !competences.isEmpty();
+    }
+    
+    public boolean getAvailableApplication(){
+        return !userApplications.isEmpty();
+    }
+    
+    public void setChosenCompetence(String chosenCompetence) {
+        for (Competence comp : competences) {
+            if(comp.getCompetence().equalsIgnoreCase(chosenCompetence)) {
+                this.chosenCompetence = comp;
+            }
+        }
+    }
+
+
+    public List<Competence> getCompetences() {
+        return competences;
+    }
+
+
+    public void setCompetences(ArrayList<Competence> competences) {
+        this.competences = competences;
+    }    
+    
+    public int getExperience() {
+        return experience;
+    }
+
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+    
+    public UserDTO getUser() {
+        return user;
+    }
+    
     public Date getAvailableFrom() {
         return null;
     }
 
-    /**
-     * @param availableFrom the availableFrom to set
-     */
     public void setAvailableFrom(Date availableFrom) {
         this.availableFrom = availableFrom;
     }
 
-    /**
-     * @return the availableTo
-     */
+
     public Date getAvailableTo() {
         return null;
-    }
+    }    
 
-    /**
-     * @param availableTo the availableTo to set
-     */
-    public void setAvailableTo(Date availableTo) {
+   public void setAvailableTo(Date availableTo) {
         this.availableTo = availableTo;
     }
-
-    /**
-     * @return the competenceProfile
-     */
     public List<CompetenceProfile> getCompetenceProfile() {
         return competenceProfile;
     }
 
-    /**
-     * @param competenceProfile the competenceProfile to set
-     */
     public void setCompetenceProfile(CompetenceProfile competenceProfile) {
     }
 
 
-    /**
-     * @return the userApplications
-     */
+
     public List<Application> getUserApplications() {
         return userApplications;
     }
 
-    /**
-     * @param userApplications the userApplications to set
-     */
+
     public void setUserApplications(List<Application> userApplications) {
     }
     
-    public boolean getAvailableCompetence(){
-        return competenceProfile != null;
-    }
-    
-    public boolean getAvailableApplication(){
-        return competenceProfile != null;
-    }
-        
-    @PostConstruct
-    public void init(){
-        if (user == null) {
-            Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-            if (principal != null) {
-                user = controller.findUser(principal.getName());
-                userApplications = controller.findAllApplicationsForUser(user);
-                competenceProfile = controller.findAllCompetenceProfilesForUser(user);
-            }
-        }
-        
-    }
 }

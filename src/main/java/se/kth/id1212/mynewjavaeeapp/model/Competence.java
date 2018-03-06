@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 
 /**
  * A persistence representation of a competence
@@ -34,13 +35,18 @@ public class Competence implements Serializable{
     
     @Id
     @Column(name="COMPETENCE_NAME")
+    @NotNull
     private String competence_name;
     
     /**
-     * Creates a new instance of Account. 
+     * Creates a new instance of Competence. 
      */
     public Competence(){}
 
+    
+    /**
+     * @return String representation of the competence
+     */
     @Override
     public String toString() {
         return getCompetence();

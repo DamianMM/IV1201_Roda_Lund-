@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 
 /**
  * A persistence representation of a users competence profile
@@ -36,17 +37,15 @@ public class CompetenceProfile implements Serializable{
     
     @Id
     @ManyToOne(optional=false)
-    @JoinColumn(name="COMPETENCE",referencedColumnName="COMPETENCE_NAME")    
+    @JoinColumn(name="COMPETENCE",referencedColumnName="COMPETENCE_NAME")   
+    @NotNull
     private Competence competence;
     
-    /*
-    @Id
-    private String person;
-    */
     
     @Id
     @ManyToOne(optional=false)
     @JoinColumn(name="PERSON",referencedColumnName="EMAIL")
+    @NotNull
     private User person;
     
     
@@ -60,7 +59,7 @@ public class CompetenceProfile implements Serializable{
      * 
      * @param years_of_experience A users experience in number of years for the chosen competence
      * @param competence Users competence
-     * @param user User identifier
+     * @param user Info about the user to be created
      */
     public CompetenceProfile(int years_of_experience, Competence competence, UserDTO user){
         this.years_of_experience = years_of_experience;
@@ -68,28 +67,24 @@ public class CompetenceProfile implements Serializable{
         person = (User) user;
     }
 
-    /**
-     * @return the years_of_experience
-     */
+
     public int getYears_of_experience() {
         return years_of_experience;
     }
 
-    /**
-     * @return the competence
-     */
+
     public Competence getCompetence() {
         return competence;
     }
 
-    /**
-     * @return the person
-     */
+
     public User getPerson() {
         return person;
     }
     
-    
+    /**
+     * @return String representation that has info about the expertise and years of experience of the expertise
+     */
     @Override
     public String toString(){
         return "Expertise: " + getCompetence() +", Years of experience: " + getYears_of_experience();

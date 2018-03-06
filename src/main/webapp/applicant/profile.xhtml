@@ -20,46 +20,49 @@
         <h:form>
             <h:commandButton value="logout" action="#{profileManager.logout}" />
         </h:form>
-        <hr/>
-        <h:form>
-            <h3>Add competence</h3>
-            <p>
-                <h:selectOneMenu value="#{profileManager.chosenCompetence}">
-                    <f:selectItems value="#{profileManager.competences}"/>
-                </h:selectOneMenu>
-            </p>
-            <p>
-                <h:outputLabel for="experience" value="Years of experience: "/>
-            </p>
-            <p>
-                <h:inputText id="experience" value="#{profileManager.experience}" converterMessage="Only digits are allowed."/>
-            </p>            
-            <p>
-                <h:commandButton value="submit" action="#{profileManager.addCompetence}"/>
-            </p>
-        </h:form>
         
+        <c:if test="#{profileManager.availableCompetences}">
+            <hr/>
+            <h:form>
+                <h3>Add competence</h3>
+                <p>
+                    <h:selectOneMenu value="#{profileManager.chosenCompetence}">
+                        <f:selectItems value="#{profileManager.competences}"/>
+                    </h:selectOneMenu>
+                </p>
+                <p>
+                    <h:outputLabel for="experience" value="Years of experience: "/>
+                </p>
+                <p>
+                    <h:inputText id="experience" value="#{profileManager.experience}" label="experience" converterMessage="Only digits are allowed."/>
+                    <h:message for="experience"/>
+                </p>            
+                <p>
+                    <h:commandButton value="submit" action="#{profileManager.addCompetence}"/>
+                </p>
+            </h:form>
+        </c:if>
         <hr/>
-        <h:form>
+        <h:form id="availabilityForm">
             <h3>Add availability</h3>
             <p>
                 <h:outputLabel for="User" value="From: yyyy-mm-dd"/>
             </p>
             
             <p>
-                <h:inputText id="availableFrom" value="#{profileManager.availableFrom}" label="Available from">
+                <h:inputText id="availableFrom" value="#{profileManager.availableFrom}">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                 </h:inputText>
-                <h:message for="Available from"/>
+                <h:message for="availableFrom"/>
             </p>
 
             
             <p>
-                <h:outputLabel for="User" value="From: yyyy-mm-dd"/>
+                <h:outputLabel for="User" value="To: yyyy-mm-dd"/>
             </p>
             
             <p>
-                <h:inputText id="availableTo" value="#{profileManager.availableTo}" label="Available to">
+                <h:inputText id="availableTo" value="#{profileManager.availableTo}" binding="#{profileManager.component}">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                 </h:inputText>
                 <h:message for="availableTo"/>
@@ -70,9 +73,10 @@
                 <h:commandButton value="apply" action="#{profileManager.submitApplication}"/>
             </p>
         </h:form>
-        <hr/>
+
         
         <c:if test="#{profileManager.availableCompetence}">
+            <hr/>
             <h3>Your Competences</h3>
             <ui:repeat var="competence" value="#{profileManager.competenceProfile}">
                 <p>
@@ -81,15 +85,16 @@
             </ui:repeat>
         </c:if>
         <c:if test="#{profileManager.availableApplication}">
+            <hr/>
             <h3>Your Availability Periods</h3>
             <ui:repeat var="app" value="#{profileManager.userApplications}">
                 <p>
                     #{app}
                 </p>
             </ui:repeat>
-            <hr/>
         </c:if>
-
+        
+        <hr/>
         <ui:insert name = "footer" >
             <ui:include src = "/fragments/footer.xhtml" />
         </ui:insert>

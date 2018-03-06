@@ -47,18 +47,28 @@ public class DatabaseDAO {
        return em.find(User.class, email);
     }
     
+    /**
+     *
+     * @param actor role to be found.
+     * @return searched actor object.
+     */
     public Actor findActorApplicant(String actor) {
         return em.find(Actor.class, actor);
     }
     
+    /**
+     *
+     * @param status to be found.
+     * @return application status object.
+     */
     public ApplicationStatus findApplicationStatus(String status) {
         return em.find(ApplicationStatus.class, status);
     }
 
     /**
      * Lists all competences not already added to the users competence profile
-     * @param email user identifier
-     * @return List of competences
+     * @param user used to not return competences already belonging to user.
+     * @return List of competences not belonging to @param user.
      */
     public List<Competence> findAllCompetences(User user) {
         return em.createNamedQuery("findAllCompetencesNotAlreadyInCompetenceProfile", Competence.class).
@@ -66,12 +76,22 @@ public class DatabaseDAO {
                 getResultList();
     }
     
+    /**
+     *
+     * @param user the user to get competence profiles for.
+     * @return list of competence profiles for @param user.   
+     */
     public List<CompetenceProfile> findAllCompetenceProfilesForUser(User user) {
         return em.createNamedQuery("findAllCompetenceProfilesForUser", CompetenceProfile.class).
                 setParameter("user", user).
                 getResultList();
     }
     
+    /**
+     *
+     * @param user search for applications belonging to user.
+     * @return list of applications belonging to user.
+     */
     public List<Application> findAllApplicationsForUser(User user) {
         return em.createNamedQuery("findAllApplicationsForUser", Application.class).
                 setParameter("user", user).

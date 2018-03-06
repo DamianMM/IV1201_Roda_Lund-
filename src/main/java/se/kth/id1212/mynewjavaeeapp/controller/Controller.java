@@ -38,7 +38,7 @@ public class Controller {
      */
     public void registerUser(UserInfoDTO userInfo) throws EntityExistsException {
         Actor actor = dB.findActorApplicant("applicant");
-        dB.registerUser(new User(userInfo, actor));       
+        dB.registerUser(new User(userInfo, actor));
     }
 
     /**
@@ -53,7 +53,7 @@ public class Controller {
 
     /**
      *
-     * @param email User identifier
+     * @param user to get competences for.
      * @return List of all competences not already added to the users competence profile
      */
     public List<Competence> getCompetences(UserDTO user) {
@@ -64,8 +64,7 @@ public class Controller {
      *
      * @param experience Number of years of experience for the chosen competence
      * @param competence Users competence
-     * @param user
-     * @param userEmail User identifier
+     * @param user to add competence for.
      */
     public void addCompetence(int experience, Competence competence, UserDTO user) {
         dB.addCompetence(new CompetenceProfile(experience, competence, user));
@@ -73,7 +72,7 @@ public class Controller {
 
     /**
      *
-     * @param user Information about the current user
+     * @param user to add application info for.
      * @param availableFrom User is available for work from this date
      * @param availableTo User is available for work to this date
      */
@@ -82,10 +81,20 @@ public class Controller {
         dB.addApplication(new Application(user, availableFrom, availableTo, status));
     }
 
+    /**
+     *
+     * @param user to get competence profiles for.
+     * @return List of competence profiles of @param user. 
+     */
     public List<CompetenceProfile> findAllCompetenceProfilesForUser(UserDTO user) {
         return dB.findAllCompetenceProfilesForUser((User)user);
     }
 
+    /**
+     *
+     * @param user to get applications for.
+     * @return List of applications of @param user. 
+     */
     public List<Application> findAllApplicationsForUser(UserDTO user) {
         return dB.findAllApplicationsForUser((User)user);
     }

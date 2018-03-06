@@ -8,9 +8,10 @@ package se.kth.id1212.mynewjavaeeapp.model;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
- *
+ * A persistence representation of an Applications status
  * @author mikaelnorberg
  */
 
@@ -18,8 +19,12 @@ import javax.persistence.Id;
 public class ApplicationStatus implements Serializable {
     
     @Id
+    @NotNull
     private String description;
     
+    /**
+     * Creates a new instance of ApplicationStatus
+     */
     public ApplicationStatus(){}
     
 }

@@ -8,7 +8,6 @@ package se.kth.id1212.mynewjavaeeapp.view;
 import java.io.Serializable;
 import java.util.Date;
 import javax.ejb.EJB;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -50,65 +49,13 @@ public class RegisterManager implements Serializable{
    @Size(min=3, max=100,
              message = "Enter a valid password. It must be 3-100 characters.")    
     private String password;
+   
+   
     private UserInfoDTO user;
     private Exception registerFailure;
     
 
-    /**
-     * @return the firstName
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * @param firstName the firstName to set
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return the lastName
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    
     
     /**
      * Registers user. Called when the user press the submit registration button.
@@ -122,27 +69,57 @@ public class RegisterManager implements Serializable{
         }catch(Exception e){
             registerFailure = e;
         }
+    }    
+    
+    
+    /**
+     *
+     * @return false if register unsuccessful
+     */
+    public boolean getSuccess(){
+        return registerFailure == null;
+    }    
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    /**
-     * @return the dateOfBirth
-     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return null;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return null;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    /**
-     * @param dateOfBirth the dateOfBirth to set
-     */
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public boolean getSuccess(){
-        return registerFailure == null;
     }
 }

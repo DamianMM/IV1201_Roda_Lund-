@@ -4,16 +4,15 @@ package se.kth.id1212.mynewjavaeeapp.model;
 import java.util.Date;
 
 /**
- *
+ * Used to transfer information about user to be created. 
  * @author mikaelnorberg
  */
 public class UserInfoDTO {
-    private int person_id;
-    private String first_name;
-    private String last_name;
-    private Date date_of_birth;
-    private String email;
-    private String password;
+    private final String first_name;
+    private final String last_name;
+    private final Date date_of_birth;
+    private final String email;
+    private final String password;
     
     /**
      *
@@ -35,46 +34,28 @@ public class UserInfoDTO {
         this.email = email;
         this.password = password;
     }
-    
-    
-    /**
-     * @return the person_id
-     */
-    public int getPerson_id() {
-        return person_id;
-    }
 
-    /**
-     * @return the first_name
-     */
+
     public String getFirst_name() {
         return first_name;
     }
 
-    /**
-     * @return the last_name
-     */
+
     public String getLast_name() {
         return last_name;
     }
 
-    /**
-     * @return the date_of_birth
-     */
+
     public Date getDate_of_birth() {
         return date_of_birth;
     }
 
-    /**
-     * @return the email
-     */
+
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @return the password
-     */
+
     public String getPassword() {
         return password;
     }

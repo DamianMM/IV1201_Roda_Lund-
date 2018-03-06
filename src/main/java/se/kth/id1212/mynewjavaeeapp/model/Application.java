@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * A persistence representation of an Application
@@ -41,10 +42,12 @@ public class Application implements Serializable {
     
     @Id
     @SequenceGenerator(name="APPLICATION_SEQUENCE_GENERATOR", sequenceName="APPLICATION_PRIMARY_KEY_SEQUENCE",initialValue=1, allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="APPLICATION_SEQUENCE_GENERATOR")                
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="APPLICATION_SEQUENCE_GENERATOR")
     int application_id;
     
+    
     @Temporal(TemporalType.DATE)
+    @NotNull
     Date register_date;
     
     
@@ -58,9 +61,11 @@ public class Application implements Serializable {
     ApplicationStatus status;
     
     @Temporal(TemporalType.DATE)
+    @NotNull
     Date from_date;
     
     @Temporal(TemporalType.DATE)
+    @NotNull
     Date to_date;
     
     /**
@@ -72,9 +77,10 @@ public class Application implements Serializable {
      * 
      * Creates a new instance of Application
      *
-     * @param userEmail User identifier
+     * @param user info belonging to the application about to be created.
      * @param availableFrom User is available for work from this date
      * @param availableTo User is available for work to this date
+     * @param status status for the application.
      */
     public Application(UserDTO user, Date availableFrom, Date availableTo, ApplicationStatus status){
         register_date = Calendar.getInstance().getTime();
@@ -84,6 +90,10 @@ public class Application implements Serializable {
         to_date = availableTo;
     }
     
+    
+    /**
+     * @return String representation of applications from_date and to_date
+     */
     @Override
     public String toString(){
         return " Availability: " + from_date + " -- " + to_date +".";
